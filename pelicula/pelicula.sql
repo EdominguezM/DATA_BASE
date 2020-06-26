@@ -1,11 +1,12 @@
 --respuesta 1
 CREATE DATABASE peliculas;
 --respuesta 2
-CREATE TABLE peliculas(id INT, pelicula VARCHAR(70), año SMALLINT, director VARCHAR(100), PRIMARY KEY(id));
-CREATE TABLE reparto(id INT, actors VARCHAR(70), FOREIGN KEY(id) REFERENCES peliculas(id));
+\c peliculas
+CREATE TABLE peliculas(id SERIAL, pelicula VARCHAR(70), año SMALLINT, director VARCHAR(100), PRIMARY KEY(id));
+CREATE TABLE reparto(id INT, actors VARCHAR(70), id_pelicula INT, FOREIGN KEY(id_pelicula) REFERENCES peliculas(id));
 --respuesta 3
 \copy peliculas FROM '/home/patan/Escritorio/DATA_BASE/pelicula/peliculas.csv' CSV HEADER;
-\copy reparto FROM '/home/patan/Escritorio/DATA_BASE/pelicula/reparto.csv' CSV HEADER;
+\copy reparto FROM '/home/patan/Escritorio/DATA_BASE/pelicula/reparto.csv' CSV;
 --respuesta 4
 SELECT peliculas.pelicula, peliculas.año,  peliculas.director, reparto.actors FROM peliculas, reparto WHERE pelicula='Titanic';
 --respuesta 5
