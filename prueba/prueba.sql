@@ -16,7 +16,7 @@ INSERT INTO clientes(nombre, rut, direccion) VALUES ('cliente1', 2000000, 'alame
 
 INSERT INTO categorias(nombre, descripcion) VALUES ('articulos de limpieza', 'productos varios para uso domestico'), ('abarrotes', 'alimentos envasados con valores nutricionales'), ('helados', 'marcas nacionales e internacionales');
 
-INSERT INTO productos(nombre, descripcion, valor_unitario, id_categoria) VALUES ('producto1', 'limpiador de oxido para todo tipo de metales', 150,1), ('producto2', 'helado de vainilla frutos del bosque con aroma a vainilla', 100,3), ('producto3', 'fideos de colores con salsa incluida', 50, 2), ('producto4', 'atún con producto sin conservantes', 150, 2), ('producto5', 'desodorante aroma a bosque', 70), ('producto6', 'agua con sabores tropicales', 30), ('producto7', 'shampoo para todo tipo de cabellos', 10), ('producto8', 'chocolate con cacao 100%', 5, 2);
+INSERT INTO productos(nombre, descripcion, valor_unitario, id_categoria) VALUES ('producto1', 'limpiador de oxido para todo tipo de metales', 150,1), ('producto2', 'helado de vainilla frutos del bosque con aroma a vainilla', 100, 3), ('producto3', 'fideos de colores con salsa incluida', 50, 2), ('producto4', 'atún con producto sin conservantes', 150, 2), ('producto5', 'desodorante aroma a bosque', 70, 2), ('producto6', 'agua con sabores tropicales', 30, 2), ('producto7', 'shampoo para todo tipo de cabellos', 10, 2), ('producto8', 'chocolate con cacao 100%', 5, 2);
 --facturas cliente 1
 INSERT INTO facturas(fecha, id_cliente) VALUES('2020-06-01', 1);
 INSERT INTO facturaproducto(id_cliente, id_factura, id_producto, cantidad) VALUES(1, 1, 1, 1), (1,1,1,2);
@@ -68,7 +68,7 @@ SELECT id_factura, cantidad, valor_unitario FROM productos, facturaproducto WHER
 SELECT clientes.nombre,  max(total) FROM clientes, facturas WHERE clientes.id_cliente = facturas.id_cliente GROUP BY clientes.nombre ORDER BY max DESC LIMIT 1;
 
 -- cliente que pagó sobre 100 de monto
-SELECT clientes.nombre, facturas.total FROM clientes, facturas WHERE clientes.id_cliente = facturas.id_cliente AND facturas.total > 100;
+SELECT clientes.nombre FROM clientes, facturas WHERE clientes.id_cliente = facturas.id_cliente AND facturas.total > 100 GROUP BY nombre HAVING count(nombre)>1;
 
 -- cuantos clientes han comprado el producto 6
 SELECT count(clientes.nombre) FROM clientes, facturaproducto WHERE clientes.id_cliente = facturaproducto.id_cliente AND facturaproducto.id_producto=6 GROUP BY nombre HAVING count(nombre)>1;
